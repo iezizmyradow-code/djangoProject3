@@ -1,21 +1,1151 @@
-MIT License
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnerPulse - AI-ассистент для ментального здоровья</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5d6afb;
+            --primary-dark: #4a56d6;
+            --secondary: #6cdfcc;
+            --light: #f8f9ff;
+            --dark: #2a2d43;
+            --gray: #6c757d;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #e74c3c;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9ff;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(93, 106, 251, 0.9), rgba(93, 106, 251, 0.8)), url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .cta-button:hover {
+            background-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        section:nth-child(even) {
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        /* Mission Section */
+        .mission-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .mission-box h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .mission-box p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        /* Problem Section */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .problem-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--primary);
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .problem-number {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .problem-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        /* Features Section */
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .highlight {
+            background-color: rgba(108, 223, 204, 0.2) !important;
+            font-weight: 600;
+        }
+        
+        /* SWOT */
+        .swot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .swot-card {
+            padding: 2rem;
+            border-radius: 10px;
+            color: white;
+            box-shadow: var(--shadow);
+        }
+        
+        .strength {
+            background-color: var(--success);
+        }
+        
+        .weakness {
+            background-color: var(--warning);
+        }
+        
+        .opportunity {
+            background-color: var(--primary);
+        }
+        
+        .threat {
+            background-color: var(--danger);
+        }
+        
+        .swot-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .swot-card h3 i {
+            margin-right: 10px;
+        }
+        
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+        
+        /* Finance */
+        .finance-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .finance-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .finance-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .finance-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .finance-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        /* Roadmap */
+        .roadmap-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .roadmap-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 30px;
+            height: 100%;
+            width: 4px;
+            background-color: var(--primary);
+        }
+        
+        .roadmap-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 3rem;
+        }
+        
+        .roadmarker {
+            position: absolute;
+            left: 18px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            z-index: 10;
+        }
+        
+        .roadmap-content {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .roadmap-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Partners */
+        .partners-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .partner-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .partner-number {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-dark);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: var(--shadow);
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 0;
+                text-align: center;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 1rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .mission-box {
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                width: 95%;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .cta-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                InnerPulse
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul id="mainNav">
+                    <li><a href="#mission">Миссия</a></li>
+                    <li><a href="#problem">Проблема</a></li>
+                    <li><a href="#solution">Решение</a></li>
+                    <li><a href="#features">Функции</a></li>
+                    <li><a href="#business">Бизнес-модель</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-Copyright (c) 2023 alexandrparovoz
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>InnerPulse: AI-ассистент для ментального здоровья</h1>
+            <p>Объединяем технологии и заботу о психическом здоровье, обеспечивая постоянный мониторинг эмоционального состояния и персонализированную поддержку.</p>
+            <a href="#solution" class="cta-button">Узнать больше</a>
+        </div>
+    </section>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+    <!-- Mission Section -->
+    <section id="mission">
+        <div class="container">
+            <div class="section-title">
+                <h2>Миссия InnerPulse</h2>
+                <p>Гармония внутреннего пульса — сделать профессиональную поддержку ментального здоровья доступной и персонализированной для каждого с помощью искусственного интеллекта.</p>
+            </div>
+            <div class="mission-box">
+                <h3>InnerPulse объединяет технологии и заботу о психическом здоровье</h3>
+                <p>Мы создаем решение для постоянного мониторинга эмоционального состояния, чтобы каждый мог получить своевременную поддержку в трудные моменты и научиться управлять своим психологическим благополучием.</p>
+            </div>
+        </div>
+    </section>
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+    <!-- Problem Section -->
+    <section id="problem" style="background-color: #f8f9ff;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Тихая эпидемия: стресс, выгорание и тревожность</h2>
+                <p>Психические расстройства становятся все более распространенными, особенно среди поколений Z и Y, но доступ к профессиональной помощи остается ограниченным.</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-number">01</div>
+                    <h3>Растущая распространённость</h3>
+                    <p>Тревожные и депрессивные расстройства среди поколений Z и Y подтверждены исследованиями ВОЗ и национальных данных.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-number">02</div>
+                    <h3>Ограничения традиционной терапии</h3>
+                    <p>Высокая стоимость, дефицит квалифицированных специалистов и социальная стигматизация затрудняют регулярное обращение за помощью.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-number">03</div>
+                    <h3>Недостаток своевременной поддержки</h3>
+                    <p>Миллионы людей испытывают недостаток психологической поддержки, что усугубляет их состояние и снижает качество жизни.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+    <!-- Solution Section -->
+    <section id="solution">
+        <div class="container">
+            <div class="section-title">
+                <h2>InnerPulse: решение для непрерывной поддержки</h2>
+                <p>Мобильный психолог в вашем смартфоне, который использует AI для ежедневного мониторинга психоэмоционального состояния.</p>
+            </div>
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <h3>Диагностика через голос и текст</h3>
+                    <p>AI анализирует голосовые и текстовые данные для точной оценки настроения и выявления кризисных состояний в режиме реального времени.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-first-aid"></i>
+                    </div>
+                    <h3>Экстренная помощь</h3>
+                    <p>В критических ситуациях приложение предлагает техники купирования паники и анонимные групповые сессии с AI-модерацией для социальной поддержки.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Поддержка сообщества</h3>
+                    <p>Анонимные групповые сессии создают атмосферу доверия и взаимопомощи, где каждый может поделиться своим опытом и получить поддержку.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" style="background-color: #f8f9ff;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ключевые функции InnerPulse</h2>
+                <p>Комплексный подход к ментальному здоровью с использованием передовых технологий искусственного интеллекта.</p>
+            </div>
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Ежедневный Pulse-чек</h3>
+                    <p>Автоматический анализ настроения на основе голосовых и текстовых сигналов для своевременного выявления изменений.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <h3>Персонализированные практики</h3>
+                    <p>AI адаптирует дыхательные упражнения, методы КПТ и медитации под индивидуальные потребности пользователя.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Экстренный щит</h3>
+                    <p>Набор техник для быстрого купирования панических атак и снятия острой тревоги в любом месте и времени.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Безопасные группы</h3>
+                    <p>Анонимные групповые сессии с поддержкой AI, создающие атмосферу доверия и взаимопомощи.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model Section -->
+    <section id="business">
+        <div class="container">
+            <div class="section-title">
+                <h2>Бизнес-модель и монетизация</h2>
+                <p>Доступный базовый функционал и расширенные возможности по подписке для обеспечения устойчивого развития проекта.</p>
+            </div>
+            
+            <div class="finance-container" style="margin-bottom: 3rem;">
+                <div class="finance-card">
+                    <h3><i class="fas fa-gift"></i> Базовый функционал</h3>
+                    <p>Доступен бесплатно с ограничениями на Pulse-чек и практики, обеспечивая массовый охват и вовлечение пользователей.</p>
+                </div>
+                <div class="finance-card">
+                    <h3><i class="fas fa-crown"></i> Премиум-подписка</h3>
+                    <p>1499 руб./мес. расширяет аналитические возможности и доступ к полной библиотеке упражнений и групповых сессий.</p>
+                </div>
+                <div class="finance-card">
+                    <h3><i class="fas fa-building"></i> Корпоративные пакеты</h3>
+                    <p>Планируется запуск для HR с целью профилактики выгорания и улучшения ментального климата сотрудников.</p>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                <h3>Анализ рынка и конкурентов</h3>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Продукт</th>
+                            <th>Основная функция</th>
+                            <th>Персонализация</th>
+                            <th>Экстренная помощь</th>
+                            <th>Цена, руб/мес</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Иоанн</td>
+                            <td>Чат-бот</td>
+                            <td>Средняя</td>
+                            <td>Нет</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Ясно (Сбер)</td>
+                            <td>Медитации</td>
+                            <td>Низкая</td>
+                            <td>Нет</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>Zigmund.Online</td>
+                            <td>Связь с психологом</td>
+                            <td>Высокая</td>
+                            <td>Да</td>
+                            <td>от 2500</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td><strong>InnerPulse</strong></td>
+                            <td><strong>AI-комьюнити</strong></td>
+                            <td><strong>Очень высокая</strong></td>
+                            <td><strong>Да</strong></td>
+                            <td><strong>1499</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- SWOT Analysis -->
+    <section style="background-color: #f8f9ff;">
+        <div class="container">
+            <div class="section-title">
+                <h2>SWOT-анализ InnerPulse</h2>
+                <p>Сильные и слабые стороны, возможности и угрозы проекта</p>
+            </div>
+            <div class="swot-grid">
+                <div class="swot-card strength">
+                    <h3><i class="fas fa-check-circle"></i> Сильные стороны</h3>
+                    <p>Уникальная персонализация AI, объединение индивидуальной работы и поддержки сообщества, функция экстренной помощи и опытная команда.</p>
+                </div>
+                <div class="swot-card weakness">
+                    <h3><i class="fas fa-exclamation-circle"></i> Слабые стороны</h3>
+                    <p>Зависимость от качества обучающих данных, юридические ограничения и необходимость активного привлечения пользователей.</p>
+                </div>
+                <div class="swot-card opportunity">
+                    <h3><i class="fas fa-bullseye"></i> Возможности</h3>
+                    <p>Рост цифрового спроса, партнёрства с компаниями и вузами, анализ анонимных данных и расширение географии присутствия.</p>
+                </div>
+                <div class="swot-card threat">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Угрозы</h3>
+                    <p>Регулирующие барьеры, усиление конкуренции, негативные прецеденты и экономические колебания рынка.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Команда InnerPulse</h2>
+                <p>Профессионалы в области технологий, дизайна и психологии, объединенные общей миссией</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Технический директор</h3>
+                    <p>Отвечает за бэкенд и внедрение AI, обеспечивая надёжность и масштабируемость платформы.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Руководитель AI/Data Science</h3>
+                    <p>Специализируется на обработке естественного языка, улучшая точность диагностики и рекомендаций.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Продуктовый дизайнер</h3>
+                    <p>Создает удобный UX, подкрепляя технологический продукт экспертизой в области пользовательского опыта.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Консультант-психолог</h3>
+                    <p>Разрабатывает методическую базу, обеспечивая научную обоснованность предлагаемых практик и упражнений.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Finance Section -->
+    <section style="background-color: #f8f9ff;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Финансовые показатели</h2>
+                <p>При достижении плановых показателей проект демонстрирует высокую маржинальность и быструю окупаемость</p>
+            </div>
+            
+            <div class="finance-container">
+                <div class="finance-card">
+                    <h3>Ключевые показатели</h3>
+                    <div class="finance-item">
+                        <span>Цена подписки (мес.)</span>
+                        <span>1 499 руб.</span>
+                    </div>
+                    <div class="finance-item">
+                        <span>Плановый объём реализации (в мес.)</span>
+                        <span>2 000 шт.</span>
+                    </div>
+                    <div class="finance-item">
+                        <span>Выручка (месячная)</span>
+                        <span>2 998 000 руб.</span>
+                    </div>
+                    <div class="finance-item">
+                        <span>Текущие расходы (месячные)</span>
+                        <span>1 580 500 руб.</span>
+                    </div>
+                    <div class="finance-item">
+                        <span>Операционная прибыль (месячная)</span>
+                        <span>1 417 500 руб.</span>
+                    </div>
+                    <div class="finance-item">
+                        <span>Срок окупаемости (PBP)</span>
+                        <span>&lt; 1 месяца</span>
+                    </div>
+                </div>
+                
+                <div class="finance-card">
+                    <h3>Первоначальные инвестиции</h3>
+                    <div class="finance-item">
+                        <span>Кредит Сбербанка</span>
+                        <span>19 000 000 руб.</span>
+                    </div>
+                    <div class="finance-item">
+                        <span>Оборудование</span>
+                        <span>1 100 000 руб.</span>
+                    </div>
+                    <div class="finance-item">
+                        <span>Лицензии и софт</span>
+                        <span>90 000 руб.</span>
+                    </div>
+                    <div class="finance-item">
+                        <span>Регистрация компании</span>
+                        <span>10 000 руб.</span>
+                    </div>
+                    <div class="finance-item">
+                        <span>Итого инвестиций</span>
+                        <span>20 200 000 руб.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title" style="margin-top: 3rem;">
+                <h3>Финансовый прогноз: доходы и окупаемость</h3>
+                <p>Для устойчивого роста InnerPulse необходимо привлечение более 1050 активных платных пользователей для прибыльной работы</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Дорожная карта развития</h2>
+                <p>Поэтапное развитие проекта InnerPulse в течение 24 месяцев</p>
+            </div>
+            
+            <div class="roadmap-container">
+                <div class="roadmap-item">
+                    <div class="roadmarker">1</div>
+                    <div class="roadmap-content">
+                        <h3>0–6 месяцев: Разработка MVP</h3>
+                        <p>Разработка минимально жизнеспособного продукта с базовым функционалом и проведение закрытого бета-тестирования для сбора отзывов пользователей.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmarker">2</div>
+                    <div class="roadmap-content">
+                        <h3>6–12 месяцев: Запуск премиум-подписки</h3>
+                        <p>Запуск премиум-подписки с расширенной AI-аналитикой и экстренной поддержкой, активное привлечение новых пользователей и удержание текущих.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmarker">3</div>
+                    <div class="roadmap-content">
+                        <h3>12–18 месяцев: Групповые сессии и B2B</h3>
+                        <p>Введение групповых сессий с AI-модерацией, начало деловых переговоров для выхода на корпоративный рынок (B2B).</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmarker">4</div>
+                    <div class="roadmap-content">
+                        <h3>18–24 месяца: Масштабирование и экспансия</h3>
+                        <p>Масштабирование функций приложения, анализ пользовательских данных и подготовка к экспансии на рынки СНГ.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section style="background-color: #f8f9ff;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Партнеры и ключевые стейкхолдеры</h2>
+                <p>Сотрудничество с ведущими исследовательскими центрами и технологическими провайдерами</p>
+            </div>
+            
+            <div class="partners-container">
+                <div class="partner-card">
+                    <div class="partner-number">01</div>
+                    <h3>Внутренние участники</h3>
+                    <p>Квалифицированная команда разработчиков, дизайнеров и специалистов по данным, а также опытный психолог-консультант, обеспечивающих комплексный подход к продукту.</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-number">02</div>
+                    <h3>Внешние заинтересованные стороны</h3>
+                    <p>Пользователи приложения, инвестиционные фонды, а также эксперты и блогеры, влияющие на популяризацию тем ментального здоровья.</p>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-number">03</div>
+                    <h3>Основные партнеры</h3>
+                    <p>Ведущие исследовательские центры ВШЭ и МГУ, технологические провайдеры облачных сервисов и API для эмоционального анализа речи, а также сообщества, продвигающие ментальное благополучие.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Запрос на стратегическое сотрудничество</h2>
+                <p>InnerPulse ищет партнёров с опытом в HR и digital-здравоохранении для масштабирования B2B-продукта</p>
+            </div>
+            
+            <div class="mission-box" style="background: linear-gradient(135deg, var(--secondary) 0%, #4ecdc4 100%);">
+                <h3>Присоединяйтесь к нашей миссии!</h3>
+                <p>Мы открыты для сотрудничества с компаниями, инвесторами и экспертами в области ментального здоровья. Вместе мы можем сделать профессиональную психологическую поддержку доступной для миллионов людей.</p>
+                <div style="margin-top: 2rem;">
+                    <a href="#contact" class="cta-button" style="background-color: white; color: var(--dark);">Связаться с нами</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>InnerPulse</h3>
+                    <p>AI-ассистент для ментального здоровья, обеспечивающий постоянный мониторинг эмоционального состояния и персонализированную поддержку.</p>
+                    <div style="margin-top: 1rem;">
+                        <i class="fas fa-heartbeat" style="font-size: 2rem; color: var(--secondary);"></i>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="#mission">Миссия</a></li>
+                        <li><a href="#problem">Проблема</a></li>
+                        <li><a href="#solution">Решение</a></li>
+                        <li><a href="#features">Функции</a></li>
+                        <li><a href="#business">Бизнес-модель</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-users"></i> Команда МКН6-241</li>
+                        <li><i class="fas fa-envelope"></i> contact@innerpulse.ai</li>
+                        <li><i class="fas fa-phone"></i> +7 (XXX) XXX-XX-XX</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, Россия</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 InnerPulse. Все права защищены. Проект подготовлен студентами группы МКН6-241.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    // Close mobile menu if open
+                    document.getElementById('mainNav').classList.remove('active');
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add active class to nav links on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav ul li a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
